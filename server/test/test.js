@@ -3,9 +3,56 @@ var chaiHttp = require('chai-http');
 var server = require('../app');
 var should = chai.should();
 var mongoose = require('mongoose');
-var Costumer = require('../models/costumers')
+var Costumer = require('../models/costumer')
+var Item = require('../models/item')
 chai.use(chaiHttp);
 
+// Items Test
+describe('Items', ()=> {
+
+  beforeEach((done)=> {
+    let newItem = new Item({
+      name: 'baju',
+      desc: 'baju keren untuk anak muda gaul jaman sekarang',
+      picture_url: 'abc/test.jpg',
+      stock : 100,
+      price : '15000'
+    })
+    newItem.save((err)=> {
+      done()
+    })
+  })
+
+  afterEach((done)=> {
+    Item.collection.remove({})
+    done()
+  })
+
+  it('Create 1 item in database', function(done) {
+      chai.
+      request(server)
+      .post('/item')
+      .send({
+        name: 'celana',
+        desc: 'celana keren untuk anak muda gaul jaman sekarang',
+        picture_url: 'abc/test.jpg',
+        stock : 100,
+        price : '15000'
+      }).end(function(err, res) {
+          res.should.have.status(200);
+          res.body.name.should
+          res.body.should.have.property('name');
+          res.body.should.have.property('facebookid');
+          res.body.should.have.property('email');
+          Item.collection.remove({})
+      })
+  })
+
+  it('Find Items in database')
+
+})
+
+// Costumers Test
 describe('costumer', function() {
 
     beforeEach(function(done) {
@@ -20,7 +67,7 @@ describe('costumer', function() {
     });
 
     afterEach(function(done) {
-        Costumer.remove({});
+        Costumer.collection.remove({});
         done();
     });
 

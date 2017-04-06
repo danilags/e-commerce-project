@@ -25,7 +25,9 @@ mongoose.connection.on('connected', function() {
 })
 
 /* ROUTES */
+const item = require('./routes/item')
 
+app.use('/item', item)
 
 /* APP LISTEN */
 app.listen(3000, function() {
