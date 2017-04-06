@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const port = 3000 || process.env.PORT
 const app = express()
 
 /* APP CONFIG */
@@ -11,7 +12,7 @@ var dbconfig = {
   development:'mongodb://localhost/ecommerce',
   test:'mongodb://localhost/ecommerce-test'
 }
-
+mongoose.Promise = global.Promise
 mongoose.connect(dbconfig[app.settings.env],
   function(err,succ){
     if (err) {
@@ -26,10 +27,14 @@ mongoose.connection.on('connected', function() {
 
 /* ROUTES */
 const item = require('./routes/item')
+const customer = require('./routes/customer')
 
-app.use('/item', item)
+app.use('/api', item)
+app.use('/api', customer)
 
 /* APP LISTEN */
-app.listen(3000, function() {
+const server = app.listen(port, function() {
   console.log("Server Jalan di port 3000");
 })
+
+module.exports = server

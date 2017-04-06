@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var ObjectId = Schema.ObjectId;
 
-var customerSchema = new Schema ({
+var customerSchema = new Schema({
   "name":String,
   "facebookid":String,
   "email": String,

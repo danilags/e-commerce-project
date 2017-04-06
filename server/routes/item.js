@@ -3,15 +3,15 @@ const router = express.Router()
 const Item = require('../controller/item')
 
 /* GET ITEMS */
-router.get('/', Item.readItems)
+router.get('/item', Item.readItems)
 
 /* POST ADD NEW ITEMS*/
-router.post('/', Item.addItem)
+router.post('/item', Item.addItem)
 
 /* PUT UPDATE ITEM */
-router.put('/:id', Item.updateItem)
+router.put('/item/:id', Item.updateItem)
 
 /* DELETE ITEM */
-router.delete('/:id', Item.deleteItem)
+router.delete('/item/:id', Item.deleteItem)
 
 module.exports = router
