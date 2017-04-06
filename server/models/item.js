@@ -3,9 +3,9 @@ var Schema = mongoose.Schema;
 var ObjectId = Schema.ObjectId;
 
 var itemSchema = new Schema ({
-  "picture_url":String,
   "name":String,
   "desc": String,
+  "picture_url":String,
   "stock":Number,
   "price":String,
 });

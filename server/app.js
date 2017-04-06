@@ -3,28 +3,31 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const app = express()
 
-
+/* APP CONFIG */
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:false}))
 
-var dbconfing = {
-  dev:'mongodb://localhost/ecommerce',
+var dbconfig = {
+  development:'mongodb://localhost/ecommerce',
   test:'mongodb://localhost/ecommerce-test'
 }
 
-mongoose.connect(dbconfing[app.settings.env],
+mongoose.connect(dbconfig[app.settings.env],
   function(err,succ){
     if (err) {
       console.log(err);
     } else {
-      console.log('conected to ' +app.settings.env);
+      console.log('connected to ' +app.settings.env);
     }
   })
-
 mongoose.connection.on('connected', function() {
   console.log('Mongodb is running!');
 })
 
+/* ROUTES */
+
+
+/* APP LISTEN */
 app.listen(3000, function() {
   console.log("Server Jalan di port 3000");
 })

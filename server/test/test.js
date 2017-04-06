@@ -7,6 +7,7 @@ var Costumer = require('../models/costumers')
 chai.use(chaiHttp);
 
 describe('costumer', function() {
+
     beforeEach(function(done) {
         var Costumer = new Blob({
             name: 'Bat',
@@ -18,10 +19,13 @@ describe('costumer', function() {
         });
     });
 
-
+    afterEach(function(done) {
+        Costumer.remove({});
+        done();
+    });
 
     it('create costumer', function(done) {
-        chai,
+        chai.
         request(server)
         .post('api/costumer')
         .send({
@@ -36,11 +40,5 @@ describe('costumer', function() {
             res.body.should.have.property('email');
         })
     })
-
-
-    afterEach(function(done) {
-        Costumer.collection.drop();
-        done();
-    });
 
 })
