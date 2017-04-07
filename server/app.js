@@ -5,6 +5,7 @@ const app = express()
 const api = require('./routes/api');
 const cors =require('cors');
 
+mongoose.Promise = global.Promise
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:false}))
 
