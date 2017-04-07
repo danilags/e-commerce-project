@@ -8,7 +8,7 @@ chai.use(chaiHttp);
 
 describe('costumer', function() {
     beforeEach(function(done) {
-        var Costumer = new Blob({
+        var Costumer = new Costumer({
             name: 'Bat',
             facebookid: '122304849',
             email: 'bat@mail.com'
@@ -21,8 +21,7 @@ describe('costumer', function() {
 
 
     it('create costumer', function(done) {
-        chai,
-        request(server)
+        chai.request(server)
         .post('api/costumer')
         .send({
             name: 'ego',
@@ -35,6 +34,32 @@ describe('costumer', function() {
             res.body.should.have.property('facebookid');
             res.body.should.have.property('email');
         })
+    });
+
+
+    it('view contumer',function(done){
+      chai.request(server)
+      .get('api/costumer')
+      .end(function(err,res){
+        res.should.have.status(200);
+        res.body.should.have.property('name');
+        res.body.should.have.property('facebookid');
+        res.body.should.have.property('email');
+      })
+    });
+
+    it('update item',function(done){
+      chai.request(server)
+      .put('api/item/')
+      .send({
+
+      })
+      .end(function(err,res){
+        res.should.have.status(200);
+        res.body.should.have.property('name');
+        res.body.should.have.property('facebookid');
+        res.body.should.have.property('email');
+      })
     })
 
 
