@@ -1,8 +1,7 @@
-
-
 window.fbAsyncInit = function() {
   FB.init({
     appId      : '268682936876371',
+    cookie     : true,
     xfbml      : true,
     version    : 'v2.8'
   });
@@ -22,8 +21,6 @@ window.fbAsyncInit = function() {
 function statusChangeCallback(response) {
     console.log(response)
     if (response.status === 'connected') {
-      // Logged into your app and Facebook.
-
       testAPI();
     } else {
       console.log('please login')
@@ -37,6 +34,8 @@ function testAPI() {
     });
 }
 
+/* Custom Vue  */
+
 var app = new Vue({
   el:'#login-button',
   data: {
@@ -47,14 +46,14 @@ var app = new Vue({
       return {
         'nav-item': true,
         'is-tab': true,
-        'hidden': this.statusLogin ? false : true
+        'hidden': this.statusLogin ? true : false
       }
     },
     classObjectLogout : function() {
       return {
         'nav-item': true,
         'is-tab': true,
-        'hidden': this.statusLogin ? true : false
+        'hidden': this.statusLogin ? false : true
       }
     }
   },

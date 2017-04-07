@@ -143,18 +143,14 @@
         </div>
       </div>
       <div class="tile is-parent custom-cart">
-        <article class="tile is-child box custom-box">
+        <article id="cartCustom" class="tile is-child box custom-box">
+          <button @click="showCart = !showCart" v-show="!verified">
+            {{ cart.length + (cart.length > 1 || cart.length === 0 ? " carts" : " cart") }}
+          </button>
+          <h5 v-for="carts in cart"><strong>{{ Number(carts.quantity) }}</strong> - {{ carts.name }} <span>Rp. {{ Number(carts.price) * Number(carts.quantity) }}</span></h5>
+          <h5>Total : <span>{{ total }} </span></h5>
           <!-- Put any content you want -->
-          <label>Sub Total: </label>
-            <p class="harga-sub">IDR. 250,000</p>
-          <label>Shipping Cost:</label>
-            <p>IDR. 15,000</p>
-          <h3>Total:</h3>
-            <p>IDR. 265,000</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Suspendisse ac arcu pellentesque
-            \Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Suspendisse ac arcu pellentesque</p>
+
           <a class="button is-danger is-outlined">Go to checkout</a>
         </article>
       </div>
@@ -185,133 +181,32 @@
               </li>
             </ul>
           </div>
+
           <div class="fashion-brang col-md-10">
             <section id="top-product">
+
                   <div class="list-wrap">
                     <ul>
-                      <li class="list-product">
+                      <li class="list-product" v-for="item in items">
                         <article class="detail-product">
                           <div class="image-product">
                             <img src="https://s1.bukalapak.com/img/6321301211/s-194-194/Kaos_DJ_Martin_Garrix_Glow_In_The_Dark_GID___DWP_RAVE_Party_.jpg.webp" alt="">
                           </div>
                           <div class="descripsi-product">
-                            <h3>Nama Product</h3>
-                            <p>Deskripsi</p>
-                            <p>Harga</p>
+                            <h3>{{ item.name }}</h3>
+                            <p>{{ item.desc }}</p>
+                            <p>{{ item.price }}</p>
                             <span>
                               <a class="button is-success">
                               <span class="icon is-small">
                                 <i class="fa fa-shopping-cart"></i>
                               </span>
-                              <span>Beli</span>
+                              <span @click='addToCart(item)'>Beli</span>
                             </a>
                           </span>
                           </div>
                         </article>
                       </li>
-                      <li class="list-product">
-                        <article class="detail-product">
-                          <div class="image-product">
-                            <img src="https://s1.bukalapak.com/img/6321301211/s-194-194/Kaos_DJ_Martin_Garrix_Glow_In_The_Dark_GID___DWP_RAVE_Party_.jpg.webp" alt="">
-                          </div>
-                          <div class="descripsi-product">
-                            <h3>Nama Product</h3>
-                            <p>Deskripsi</p>
-                            <p>Harga</p>
-                            <span>
-                              <a class="button is-success">
-                              <span class="icon is-small">
-                                <i class="fa fa-shopping-cart"></i>
-                              </span>
-                              <span>Beli</span>
-                            </a>
-                          </span>
-                          </div>
-                        </article>
-                      </li>
-                      <li class="list-product">
-                        <article class="detail-product">
-                          <div class="image-product">
-                            <img src="https://s1.bukalapak.com/img/6321301211/s-194-194/Kaos_DJ_Martin_Garrix_Glow_In_The_Dark_GID___DWP_RAVE_Party_.jpg.webp" alt="">
-                          </div>
-                          <div class="descripsi-product">
-                            <h3>Nama Product</h3>
-                            <p>Deskripsi</p>
-                            <p>Harga</p>
-                            <span>
-                              <a class="button is-success">
-                              <span class="icon is-small">
-                                <i class="fa fa-shopping-cart"></i>
-                              </span>
-                              <span>Beli</span>
-                            </a>
-                          </span>
-                          </div>
-                        </article>
-                      </li>
-                      <li class="list-product">
-                        <article class="detail-product">
-                          <div class="image-product">
-                            <img src="https://s1.bukalapak.com/img/6321301211/s-194-194/Kaos_DJ_Martin_Garrix_Glow_In_The_Dark_GID___DWP_RAVE_Party_.jpg.webp" alt="">
-                          </div>
-                          <div class="descripsi-product">
-                            <h3>Nama Product</h3>
-                            <p>Deskripsi</p>
-                            <p>Harga</p>
-                            <span>
-                              <a class="button is-success">
-                              <span class="icon is-small">
-                                <i class="fa fa-shopping-cart"></i>
-                              </span>
-                              <span>Beli</span>
-                            </a>
-                          </span>
-                          </div>
-                        </article>
-                      </li>
-
-                      <li class="list-product">
-                        <article class="detail-product">
-                          <div class="image-product">
-                            <img src="https://s1.bukalapak.com/img/6321301211/s-194-194/Kaos_DJ_Martin_Garrix_Glow_In_The_Dark_GID___DWP_RAVE_Party_.jpg.webp" alt="">
-                          </div>
-                          <div class="descripsi-product">
-                            <h3>Nama Product</h3>
-                            <p>Deskripsi</p>
-                            <p>Harga</p>
-                            <span>
-                              <a class="button is-success">
-                              <span class="icon is-small">
-                                <i class="fa fa-shopping-cart"></i>
-                              </span>
-                              <span>Beli</span>
-                            </a>
-                          </span>
-                          </div>
-                        </article>
-                      </li>
-
-                      <li class="list-product">
-                        <article class="detail-product">
-                          <div class="image-product">
-                            <img src="https://s1.bukalapak.com/img/6321301211/s-194-194/Kaos_DJ_Martin_Garrix_Glow_In_The_Dark_GID___DWP_RAVE_Party_.jpg.webp" alt="">
-                          </div>
-                          <div class="descripsi-product">
-                            <h3>Nama Product</h3>
-                            <p>Deskripsi</p>
-                            <p>Harga</p>
-                            <span>
-                              <a class="button is-success">
-                              <span class="icon is-small">
-                                <i class="fa fa-shopping-cart"></i>
-                              </span>
-                              <span>Beli</span>
-                            </a>
-                          </span>
-                          </div>
-                        </article>
-                      </li>
-
                     </ul>
                   </div>
             </section>
@@ -322,7 +217,9 @@
     </div>
   </section>
 
-  <section id="footer">
+
+
+  <!-- <section id="footer"> -->
     <footer>
       <div class="container">
         <div class="row">
@@ -358,7 +255,7 @@
             </div>
           </div>
           <div class="col-md-3 col-sm-6 paddingtop-bottom">
-            <div class="fb-page" data-href="https://www.facebook.com/facebook" data-tabs="timeline" data-height="300" data-small-header="false" style="margin-bottom:15px;" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
+            <div class="fb-page" data-href="https://www.facebook.com/danilags94" data-tabs="timeline" data-height="300" data-small-header="false" style="margin-bottom:15px;" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
               <div class="fb-xfbml-parse-ignore">
                 <blockquote cite="https://www.facebook.com/facebook"><a href="https://www.facebook.com/facebook">Facebook</a></blockquote>
               </div>
@@ -371,5 +268,63 @@
 
 
   </body>
+  <script type="text/javascript">
+  var app = new Vue({
+      el: '#top-product',
+      data: {
+        items: []
+      },
+      methods: {
+        getItems: function() {
+          let self = this
+
+          axios.get('http://localhost:3000/api/item')
+               .then(function(response) {
+                 console.log(response.data);
+                 response.data.forEach(function(item) {
+                   item.quantity = 0
+                   self.items.push(item)
+                 })
+                 console.log(response.data);
+               })
+               .catch(function(error) {
+                 console.log(error);
+               })
+        },
+        addToCart: function(item) {
+          // for (var i = 0; i < app2.cart.length; i++) {
+            if (app2.cart.indexOf(item) !== -1) {
+              item.quantity += 1
+            } else {
+              item.quantity += 1
+              app2.cart.push(item)
+            }
+          // }
+        }
+      },
+      mounted() {
+        this.getItems()
+      }
+  })
+
+  var app2 = new Vue({
+    el: '#cartCustom',
+    data: {
+      cart:[],
+      showCart: false,
+      verified:false
+    },
+    computed: {
+      total() {
+        var total = 0;
+        for(var i = 0; i < this.cart.length; i++) {
+         total += Number(this.cart[i].price * this.cart[i].quantity);
+       }
+       return total;
+      }
+    }
+  })
+  </script>
   <script src="js/script.js"></script>
+  <script src="js/add-to-cart.js"></script>
 </html>
