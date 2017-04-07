@@ -3,8 +3,8 @@ var Schema = mongoose.Schema;
 var ObjectId = Schema.ObjectId;
 
 var CartSchema = new Schema ({
-  "contumer_facebookid":String,
-  "date":Date,
+  "facebookid": {type: String, ref: 'Customer'},
+  "date": Date,
   "item_list":[{ type: Schema.Types.ObjectId, ref: 'Item'}]
 });
 

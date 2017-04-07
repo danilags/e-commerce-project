@@ -2,12 +2,12 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var ObjectId = Schema.ObjectId;
 
-var costumersSchema = new Schema ({
+var customerSchema = new Schema({
   "name":String,
   "facebookid":String,
   "email": String,
 });
 
-var Costumer = mongoose.model('Costumer', costumersSchema);
+var Customer = mongoose.model('Customer', customerSchema);
 
-module.exports = Costumer;
+module.exports = Customer;
