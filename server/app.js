@@ -28,9 +28,11 @@ mongoose.connection.on('connected', function() {
 /* ROUTES */
 const item = require('./routes/item')
 const customer = require('./routes/customer')
+const mail = require('./routes/mail')
 
 app.use('/api', item)
 app.use('/api', customer)
+app.use('/api', mail)
 
 /* APP LISTEN */
 const server = app.listen(port, function() {
