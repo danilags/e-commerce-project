@@ -9,6 +9,7 @@ chai.use(chaiHttp);
 
 // Items Test
 describe('ITEM CRUD TEST', ()=> {
+  let currentTest
 
   beforeEach((done)=> {
     let newItem = new Item({
@@ -18,21 +19,26 @@ describe('ITEM CRUD TEST', ()=> {
       stock : 100,
       price : '15000'
     })
-    newItem.save((err)=> {
-      if(err) console.log(err)
-      done()
+    newItem.save((err, data)=> {
+      if(err) {
+        console.log(err)
+      } else {
+        currentTest = data
+        done()
+      }
     })
   })
 
   afterEach((done)=> {
     Item.collection.remove({})
+    currentTest = ''
     done()
   })
 
   it('Create 1 item in database', function(done) {
       chai
       .request(server)
-      .post('/item')
+      .post('/api/item')
       .send({
         name: 'celana',
         desc: 'celana keren untuk anak muda gaul jaman sekarang',
@@ -45,6 +51,9 @@ describe('ITEM CRUD TEST', ()=> {
           res.body.should.have.property('name')
           res.body.should.have.property('desc')
           res.body.should.have.property('picture_url')
+          res.body.should.have.property('stock')
+          res.body.stock.should.be.a('number')
+          res.body.should.have.property('price')
           done()
       })
   })
@@ -52,10 +61,50 @@ describe('ITEM CRUD TEST', ()=> {
   it('Find Items in database', function(done) {
     chai
       .request(server)
-      .get('/item')
+      .get('/api/item')
       .end(function(err, res) {
         res.should.have.status(200)
         res.body.should.be.a('array')
+        done()
+      })
+  })
+
+  it('Update 1 item in database', function(done) {
+    chai
+      .request(server)
+      .put(`/api/item/${currentTest._id}`)
+      .send({
+        name: 'baju orange',
+        desc: 'baju enak pakai',
+        picture_url: 'edf/oranye.png',
+        stock: 99,
+        price: '50000'
+      })
+      .end(function(err, res) {
+        res.should.have.status(200)
+        res.body.should.have.property('name')
+        res.body.name.should.equal('baju orange')
+        res.body.should.have.property('desc')
+        res.body.desc.should.equal('baju enak pakai')
+        res.body.should.have.property('picture_url')
+        res.body.picture_url.should.equal('edf/oranye.png')
+        res.body.should.have.property('stock')
+        res.body.stock.should.equal(99)
+        res.body.stock.should.be.a('number')
+        res.body.should.have.property('price')
+        res.body.price.should.equal('50000')
+        done()
+      })
+  })
+
+  it('Delete 1 item in database', function(done) {
+    chai
+      .request(server)
+      .delete(`/api/item/${currentTest._id}`)
+      .end(function(err, res) {
+        res.should.have.status(200)
+        res.body.should.have.property('name')
+        res.body.name.should.equal('baju')
         done()
       })
   })
