@@ -7,9 +7,23 @@ var Customer = require('../models/customer')
 var Item = require('../models/item')
 chai.use(chaiHttp);
 
+<<<<<<< HEAD
+describe('costumer', function() {
+    beforeEach(function(done) {
+        var Costumer = new Costumer({
+            name: 'Bat',
+            facebookid: '122304849',
+            email: 'bat@mail.com'
+        });
+        Costumer.save(function(err) {
+            done();
+        });
+    });
+=======
 // Items Test
 describe('ITEM CRUD TEST', ()=> {
   let currentTest
+>>>>>>> c011a2183eb20c9fbfebdacd1ef525cfe15d4e5a
 
   beforeEach((done)=> {
     let newItem = new Item({
@@ -132,8 +146,12 @@ describe('CUSTOMER CR TEST', function() {
     })
 
     it('create costumer', function(done) {
+<<<<<<< HEAD
+        chai.request(server)
+=======
         chai.
         request(server)
+>>>>>>> c011a2183eb20c9fbfebdacd1ef525cfe15d4e5a
         .post('api/costumer')
         .send({
             name: 'ego',
@@ -147,6 +165,32 @@ describe('CUSTOMER CR TEST', function() {
             res.body.should.have.property('email');
             done()
         })
+    });
+
+
+    it('view contumer',function(done){
+      chai.request(server)
+      .get('api/costumer')
+      .end(function(err,res){
+        res.should.have.status(200);
+        res.body.should.have.property('name');
+        res.body.should.have.property('facebookid');
+        res.body.should.have.property('email');
+      })
+    });
+
+    it('update item',function(done){
+      chai.request(server)
+      .put('api/item/')
+      .send({
+
+      })
+      .end(function(err,res){
+        res.should.have.status(200);
+        res.body.should.have.property('name');
+        res.body.should.have.property('facebookid');
+        res.body.should.have.property('email');
+      })
     })
 
 })
