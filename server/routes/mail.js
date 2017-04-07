@@ -21,19 +21,18 @@ function getAuth(cb) {
   })
 }
 
-function sendMail(auth, cb) {
+function sendMail(auth, data, cb) {
   let gmailClass = google.gmail('v1')
 
   let mails = []
 
-  mails.push('From: "Mail" <andra.satria1@gmail.com>')
-  mails.push('To: anthonyjuan95@gmail.com')
+  mails.push('From: "Thank you for buying" <andra.satria1@gmail.com>')
+  mails.push(`To: ${data}`)
   mails.push('Content-type: text/html;charset=iso-8859-1')
   mails.push('MIME-Version: 1.0')
   mails.push('Subject: Your checkout list')
   mails.push('')
-  mails.push('And this would be the content.<br/>')
-  mails.push('The body is in HTML so <b>we could even use bold</b>')
+  mails.push('Thank you for buying from us !')
 
   let email = mails.join('\r\n').trim(),
       base64 = new Buffer(email).toString('base64')
@@ -81,7 +80,7 @@ router.get('/mail', (req, res)=> {
           let file = 'gmail-credentials.json'
           fs.writeFile(file, JSON.stringify(token))
           console.log('Created credential file in : ', file)
-          res.redirect('/api/mail/send')
+          // res.redirect('/api/mail/send')
         }
       })
     }
@@ -97,7 +96,7 @@ router.get('/mail/send', (req,res)=> {
         res.send(err)
       } else {
         auth.credentials = JSON.parse(token)
-        sendMail(auth, (err, result)=> {
+        sendMail(auth, req.query.email, (err, result)=> {
           if(err) {
             console.log('err : ', err)
           } else {

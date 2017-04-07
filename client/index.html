@@ -151,7 +151,7 @@
           <h5>Total : <span>{{ total }} </span></h5>
           <!-- Put any content you want -->
 
-          <a class="button is-danger is-outlined">Go to checkout</a>
+          <a class="button is-danger is-outlined" @click="checkout()">Go to checkout</a>
         </article>
       </div>
   </div>
@@ -321,6 +321,18 @@
          total += Number(this.cart[i].price * this.cart[i].quantity);
        }
        return total;
+      }
+    },
+    methods : {
+      checkout: function() {
+        axios.post('http://localhost:3000/api/checkout', {carts: app2.cart},{headers: {'token': localStorage.getItem('token')}})
+          .then(function(res) {
+            console.log(res)
+            axios.get('http://localhost:3000/g/mail/send?='+res.data.email)
+              .then(function() {
+                console.log('email sent')
+              })
+          })
       }
     }
   })

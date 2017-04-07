@@ -4,6 +4,7 @@ var ObjectId = Schema.ObjectId;
 
 var CartSchema = new Schema ({
   "facebookid": {type: String, ref: 'Customer'},
+  "email": String,
   "date": Date,
   "item_list":[{ type: Schema.Types.ObjectId, ref: 'Item'}]
 });

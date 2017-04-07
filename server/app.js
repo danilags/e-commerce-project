@@ -1,13 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const cors = require('cors');
 const port = 3000 || process.env.PORT
 const app = express()
 const api = require('./routes/api');
 const cors = require('cors');
 
-
+app.use(cors());
 mongoose.Promise = global.Promise
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:false}))
@@ -34,7 +33,8 @@ mongoose.connection.on('connected', function() {
 app.use('/api',api);
 
 const mail = require('./routes/mail')
-app.use(cors());
+
+app.use('/g', mail)
 
 const server = app.listen(port, function() {
   console.log("Server Jalan di port 3000");

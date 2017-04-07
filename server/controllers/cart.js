@@ -4,10 +4,10 @@ let Costumer = require('../models/costumers');
 module.exports = {
     checkout: function(req, res) {
         let item_ids = [];
-        let item_id = req.body.item.split(',')
-        //console.log(item_id);
+        let item_id = req.body.carts
+        // console.log(item_id);
         item_id.forEach(function(item) {
-            item_ids.push(item);
+            item_ids.push(item._id);
         })
 
         console.log(item_ids);
@@ -19,6 +19,7 @@ module.exports = {
             console.log(decoded)
             Cart.create({
                 contumer_facebookid: decoded.data.facebookid,
+                email : decoded.data.email,
                 date: Date.now(),
                 item_list: item_ids
             },function(err,data) {

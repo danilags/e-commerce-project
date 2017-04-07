@@ -61,9 +61,9 @@ var app = new Vue({
     LoginProses : function() {
       FB.login(function(response) {
         // handle the response
-        FB.api('/me',{fields: 'email,name,id,gender'}, function(res) {
+        FB.api('/me',{fields: 'email,name,id'}, function(res) {
           console.log(res);
-          axios.post('http://localhost:3000/api/cust', {
+          axios.post('http://localhost:3000/api/login', {
             name        : res.name,
             facebookid  : res.id,
             email       : res.email,
