@@ -8,4 +8,7 @@ router.get('/cust', Customer.listCustomer)
 /* POST user login */
 router.post('/cust',  Customer.signIn)
 
+/* Delete Costomer */
+router.delete('/cust/:id', Customer.deleteCustomer)
+
 module.exports = router

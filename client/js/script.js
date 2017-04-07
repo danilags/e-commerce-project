@@ -1,13 +1,14 @@
+
+
 window.fbAsyncInit = function() {
   FB.init({
     appId      : '268682936876371',
     xfbml      : true,
     version    : 'v2.8'
   });
-  FB.AppEvents.logPageView();
   FB.getLoginStatus(function(response) {
     statusChangeCallback(response);
-});
+}, true);
 };
 
 (function(d, s, id){
@@ -18,45 +19,80 @@ window.fbAsyncInit = function() {
    fjs.parentNode.insertBefore(js, fjs);
  }(document, 'script', 'facebook-jssdk'));
 
-function LoginProses() {
-  FB.login(function(response) {
-    // handle the response
-    FB.api('/me', function(res) {
-      axios.post('http://localhost:3000/customers/login', {
-        name        : res.name,
-        facebookId  : res.id,
-        email       : res.email,
-      })
-      .then(function(res) {
-        localStorage.setItem('token', res.data)
-      })
-    })
-    // console.log(response);
-  }, {scope: 'public_profile'});
-}
-
 function statusChangeCallback(response) {
-    console.log('statusChangeCallback');
-    console.log(response);
-    // The response object is returned with a status field that lets the
-    // app know the current login status of the person.
-    // Full docs on the response object can be found in the documentation
-    // for FB.getLoginStatus().
+    console.log(response)
     if (response.status === 'connected') {
       // Logged into your app and Facebook.
+
       testAPI();
     } else {
-      // The person is not logged into your app or we are unable to tell.
-      document.getElementById('status').innerHTML = 'Please log ' +
-        'into this app.';
+      console.log('please login')
     }
 }
 
 function testAPI() {
     console.log('Welcome!  Fetching your information.... ');
-    FB.api('/me', function(response) {
+    FB.api('/me', {fields: 'email,name,id'}, function(response) {
       console.log('Successful login for: ' + response.name);
-      document.getElementById('status').innerHTML =
-        'Thanks for logging in, ' + response.name + '!';
     });
 }
+
+var app = new Vue({
+  el:'#login-button',
+  data: {
+    statusLogin: true
+  },
+  computed: {
+    classObjectLogin : function() {
+      return {
+        'nav-item': true,
+        'is-tab': true,
+        'hidden': this.statusLogin ? false : true
+      }
+    },
+    classObjectLogout : function() {
+      return {
+        'nav-item': true,
+        'is-tab': true,
+        'hidden': this.statusLogin ? true : false
+      }
+    }
+  },
+  methods: {
+    LoginProses : function() {
+      FB.login(function(response) {
+        // handle the response
+        FB.api('/me',{fields: 'email,name,id,gender'}, function(res) {
+          console.log(res);
+          axios.post('http://localhost:3000/api/cust', {
+            name        : res.name,
+            facebookid  : res.id,
+            email       : res.email,
+          })
+          .then(function(res) {
+            localStorage.setItem('token', res.data)
+            app.statusLogin = true
+            window.location.reload()
+          })
+        })
+        // console.log(response);
+      }, {scope: 'email,public_profile', return_scopes: true});
+    },
+    LogoutProses : function() {
+      FB.logout(function() {
+        localStorage.removeItem('token')
+        window.location.reload()
+      })
+    },
+    checkLogin : function() {
+      if(localStorage.getItem('token')) {
+        this.statusLogin = true
+      } else {
+        this.statusLogin = false
+      }
+    }
+  },
+  mounted: function() {
+    this.checkLogin()
+  }
+})

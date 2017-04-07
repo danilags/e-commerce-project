@@ -4,7 +4,7 @@ module.exports = {
 
   signIn : (req, res)=> {
     console.log(req.body)
-    Customer.findOne({id : req.body.id}, (err, cust)=> {
+    Customer.findOne({facebookid : req.body.facebookid}, (err, cust)=> {
       if(err) {
         res.send('Error finding data')
       } else if(cust){
@@ -12,7 +12,7 @@ module.exports = {
       } else {
         let newCust = new Customer({
           name : req.body.name,
-          facebookid : req.body.id,
+          facebookid : req.body.facebookid,
           email : req.body.email
         })
         newCust.save(function(err, customer) {
@@ -33,5 +33,16 @@ module.exports = {
         res.send(customers)
       }
     })
+  },
+
+  deleteCustomer : (req, res) => {
+    Customer.findByIdAndRemove(req.params.id,
+      function(err, data) {
+        if (err) {
+          res.send(err)
+        } else {
+          res.send("Customer Successful Deleted !")
+        }
+      })
   }
 }
